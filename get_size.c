@@ -1,23 +1,26 @@
 #include "main.h"
+
 /**
- *get_size - calculates size of argument
- *@format: format
- *@p: parameters
- *Return: size
+ * get_size - Calculates the size to cast the argument
+ * @format: Formatted string in which to print the arguments
+ * @i: List of arguments to be printed.
+ *
+ * Return: Precision.
  */
-int get_size(const char *format, int *p)
+int get_size(const char *format, int *i)
 {
-	int x = *p + 1;
+	int curr_i = *i + 1;
 	int size = 0;
 
-	if (format[x] == 'l')
+	if (format[curr_i] == 'l')
 		size = S_LONG;
-	else if (format[x] == 'h')
+	else if (format[curr_i] == 'h')
 		size = S_SHORT;
+
 	if (size == 0)
-		*p = x - 1;
+		*i = curr_i - 1;
 	else
-		*p = x;
+		*i = curr_i;
 
 	return (size);
 }
