@@ -20,8 +20,8 @@ int get_flags(const char *format, int *p)
 				flags |= FLAGS_ARR[j];
 				break;
 			}
-			if (FLAGS_CH[j] == 0)
-				break;
+		if (FLAGS_CH[j] == 0)
+			break;
 	}
 	*p = x - 1;
 

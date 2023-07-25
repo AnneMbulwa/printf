@@ -2,7 +2,7 @@
 #define MAIN_H
 #include <stdarg.h>
 #include <stdio.h>
-#include <unstd.h>
+#include <unistd.h>
 
 #define BUFF_SIZE 1024
 
@@ -20,32 +20,33 @@
 /**
  *struct fmt - Struct Op
  *@fmt: format
- *@f: function
+ *@fn: function
  */
 struct fmt
 {
 	char fmt;
-	int (*f)(va_list, char[], int, int, int int)
-}
+	int (*fn)(va_list, char[], int, int, int, int);
+};
 
 typedef struct fmt fmt_t;
 
 int _printf(const char *format, ...);
-int get_func(const char *format, int *p, va_list args,
+int get_func(const char *format, int *p, va_list args, char buffer[],
 		int flags, int width, int size, int precision);
 
 /*FUNCTIONS*/
 int print_char(va_list args, char buffer[], int size,
 		int width, int precision, int flags);
-int print_string(va_list args);
+int print_string(va_list args, int width, int precision, int flags);
 int print_percent(va_list args);
-int print_int(va_list args, char buffer[]);
+int print_int(va_list args, char buffer[], int size,
+		int width, int flags, int precision);
 int print_binary(va_list args);
 int print_unsigned(va_list args, char buffer[], int size,
 		int flags, int precision, int width);
 int print_octal(va_list args, char buffer[], int size,
 		int width, int precision, int flags);
-int print_hexa_decimal(va_list args, char buffer[], int size,
+int print_hexadecimal(va_list args, char buffer[], int size,
 		int width, int flags, int precision);
 int print_hexa_upper(va_list args, char buffer[], int size,
 		int flags, int width, int precision);
@@ -58,7 +59,7 @@ int print_rot13(va_list args);
 
 int get_flags(const char *format, int *p);
 int get_precision(const char *format, int *p, va_list args);
-int get_width(const char *format, int *p, va_list args);
+int get_width(const char *format, va_list args, int *p);
 int get_size(const char *format, int *p);
 
 int handle_write_char(char c, char buffer[],

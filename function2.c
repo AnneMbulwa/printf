@@ -5,28 +5,21 @@
  * @args: List a of arguments
  * @buffer: Buffer array to handle print
  * @flags:  Calculates active flags
- * @width: get width
- * @precision: Precision specification
- * @size: Size specifier
+ * @width: check for the width
  * Return: Number of chars printed.
  */
-int print_pointer(va_list args, char buffer[],
-	int flags, int width, int precision, int size)
+int print_pointer(va_list args, char buffer[], int flags, int width)
 {
 	char extra_c = 0, padd = ' ';
 	int ind = BUFF_SIZE - 2, length = 2, padd_start = 1; /* length=2, for '0x' */
 	unsigned long num_addrs;
 	char map_to[] = "0123456789abcdef";
-	void *addrs = va_arg(types, void *);
-
-	UNUSED(width);
-	UNUSED(size);
+	void *addrs = va_arg(args, void *);
 
 	if (addrs == NULL)
 		return (write(1, "(nil)", 5));
 
 	buffer[BUFF_SIZE - 1] = '\0';
-	UNUSED(precision);
 
 	num_addrs = (unsigned long)addrs;
 
@@ -65,7 +58,7 @@ int print_non_printable(va_list args, char buffer[],
 	int flags, int width, int precision, int size)
 {
 	int i = 0, offset = 0;
-	char *str = va_arg(types, char *);
+	char *str = va_arg(args, char *);
 
 	UNUSED(flags);
 	UNUSED(width);
@@ -101,12 +94,10 @@ int print_reverse(va_list args)
 	char *str;
 	int i, count = 0;
 
-	str = va_arg(types, char *);
+	str = va_arg(args, char *);
 
 	if (str == NULL)
 	{
-		UNUSED(precision);
-
 		str = ")Null(";
 	}
 	for (i = 0; str[i]; i++)
@@ -127,7 +118,7 @@ int print_reverse(va_list args)
  * @args: List of arguments
  * Return: Numbers of chars printed
  */
-int print_rot13string(va_list args)
+int print_rot13(va_list args)
 {
 	char x;
 	char *str;
@@ -136,7 +127,7 @@ int print_rot13string(va_list args)
 	char in[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 	char out[] = "NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm";
 
-	str = va_arg(types, char *);
+	str = va_arg(args, char *);
 
 	if (str == NULL)
 		str = "(AHYY)";
